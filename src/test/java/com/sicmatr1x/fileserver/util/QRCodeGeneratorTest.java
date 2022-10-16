@@ -81,7 +81,7 @@ class QRCodeGeneratorTest {
      */
     @Test
     void test_file_generate_QRCode() throws IOException, WriterException {
-        String input = "/files/avatar.7z";
+        String input = "/files/test.md";
         String path = System.getProperty("user.dir") + input;
         String base64 = MyBase64Util.encodeBase64File(path);
 
