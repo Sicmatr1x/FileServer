@@ -34,5 +34,6 @@ build/
 
 ### idea ###
 .idea/
+.run/
 
 .mvn/

@@ -62,7 +62,8 @@ public class ReceiveServiceImpl implements ReceiveService {
         list.add(sliceEntity);
         if (list.size() == size) { // 如果已经收到全部数据段
             Collections.sort(list);
-            System.out.println("接收完毕: [" + list.size() + "/" + size + "]");
+            System.out.println("====================================================================");
+            System.out.println("receive done: [" + list.size() + "/" + size + "]");
             // 开始拼装base64
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < list.size(); i++) {
@@ -73,7 +74,7 @@ public class ReceiveServiceImpl implements ReceiveService {
             try {
                 String base64Code = MyBase64Util.convertHtmlSafeStrToBase64(stringBuilder.toString());
                 String filepath = FileConfig.getFilePath(filename);
-                System.out.println("写入文件: " + filepath + ", base64.length=" + base64Code.length());
+                System.out.println("write to file: " + filepath + ", base64.length=" + base64Code.length());
                 String md5 = MyBase64Util.decoderBase64File(base64Code, filepath);
                 System.out.println("MD5=" + md5);
                 entity.setData(md5);

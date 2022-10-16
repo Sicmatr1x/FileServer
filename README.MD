@@ -4,7 +4,7 @@
 - Windows: ipconfig /all
 
 GET /mcafee/f/{filename}/s/{size}/seq/{seq}/b/{context}
-- 192.168.50.148:7010/mcafee/f/{filename}/s/{size}/seq/{seq}/b/{context}
+- 192.168.50.234:7010/mcafee/f/receive_avatar.7z/s/2479/seq/{{seq}}/b/{{context}}
 
 生成 postman 自动测试 json文件
 运行 `com.sicmatr1x.fileserver.util.JsonGeneratorTest.generatePostmanJsonFile` 方法
