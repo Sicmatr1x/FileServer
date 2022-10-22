@@ -34,10 +34,7 @@ public class SliceEntity implements Comparable{
 
     @Override
     public String toString() {
-        return "SliceEntity{" +
-                "seq=" + seq +
-                ", context='" + context + '\'' +
-                '}';
+        return seq + ": " + context;
     }
 
     @Override

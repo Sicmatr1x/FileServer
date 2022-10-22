@@ -13,6 +13,12 @@ import java.util.List;
  * postman 自动批量发送请求的 json 文件生成器
  */
 public class JsonGenerator {
+
+    /**
+     * 生成的 json 文件名
+     */
+    public static String JSON_FILE_NAME = "postmanRunner.json";
+
     /**
      * 最大POST body大小
      * 单位: 1B（byte，字节）

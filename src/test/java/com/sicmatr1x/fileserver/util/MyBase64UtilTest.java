@@ -12,9 +12,12 @@ import java.io.UnsupportedEncodingException;
 
 class MyBase64UtilTest {
 
+    String TEST_FILE_NAME = "avatar.7z";
+    String TEMP_FILE_NAME = "temp_avatar.7z";
+
     @Before
     public void before() {
-        FileConfig.init();
+
     }
 
     @After
@@ -44,16 +47,17 @@ class MyBase64UtilTest {
      */
     @Test
     void test_encode_decode_file_and_Base64() throws IOException {
-        FileConfig.init();
-        Assert.assertTrue(FileConfig.fileExists(FileConfig.TEST_FILE_PATH));
+        String testFilePath = FileConfig.getFilePath(TEST_FILE_NAME);
+        String tempFilePath = FileConfig.getFilePath(TEMP_FILE_NAME);
+        Assert.assertTrue(FileConfig.fileExists(testFilePath));
 
-        String sourceMd5 = MD5Util.getFileMd5(FileConfig.TEST_FILE_PATH);
-        String base64 = MyBase64Util.encodeBase64File(FileConfig.TEST_FILE_PATH);
-        String targetMd5 = MyBase64Util.decoderBase64File(base64, FileConfig.TEMP_FILE_PATH);
-        Assert.assertTrue(FileConfig.fileExists(FileConfig.TEMP_FILE_PATH));
+        String sourceMd5 = MD5Util.getFileMd5(testFilePath);
+        String base64 = MyBase64Util.encodeBase64File(testFilePath);
+        String targetMd5 = MyBase64Util.decoderBase64File(base64, tempFilePath);
+        Assert.assertTrue(FileConfig.fileExists(testFilePath));
         Assert.assertEquals(sourceMd5, targetMd5);
 
-        FileConfig.deleteFile(FileConfig.TEMP_FILE_PATH);
+        FileConfig.deleteFile(tempFilePath);
     }
 
     /**
@@ -66,20 +70,21 @@ class MyBase64UtilTest {
      */
     @Test
     void test_encode_decode_base64_convert_file_and_Base64() throws IOException {
-        FileConfig.init();
-        Assert.assertTrue(FileConfig.fileExists(FileConfig.TEST_FILE_PATH));
+        String testFilePath = FileConfig.getFilePath(TEST_FILE_NAME);
+        String tempFilePath = FileConfig.getFilePath(TEMP_FILE_NAME);
+        Assert.assertTrue(FileConfig.fileExists(testFilePath));
 
-        String sourceMd5 = MD5Util.getFileMd5(FileConfig.TEST_FILE_PATH);
-        String base64 = MyBase64Util.encodeBase64File(FileConfig.TEST_FILE_PATH);
+        String sourceMd5 = MD5Util.getFileMd5(testFilePath);
+        String base64 = MyBase64Util.encodeBase64File(testFilePath);
 
         String safeBase64 = MyBase64Util.convertBase64ToHtmlSafeStr(base64);
         String unsafeBase64 = MyBase64Util.convertHtmlSafeStrToBase64(safeBase64);
         Assert.assertEquals(base64, unsafeBase64);
 
-        String targetMd5 = MyBase64Util.decoderBase64File(base64, FileConfig.TEMP_FILE_PATH);
-        Assert.assertTrue(FileConfig.fileExists(FileConfig.TEMP_FILE_PATH));
+        String targetMd5 = MyBase64Util.decoderBase64File(base64, tempFilePath);
+        Assert.assertTrue(FileConfig.fileExists(tempFilePath));
         Assert.assertEquals(sourceMd5, targetMd5);
 
-        FileConfig.deleteFile(FileConfig.TEMP_FILE_PATH);
+        FileConfig.deleteFile(tempFilePath);
     }
 }

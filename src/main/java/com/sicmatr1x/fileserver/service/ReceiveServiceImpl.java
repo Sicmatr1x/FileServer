@@ -18,7 +18,7 @@ public class ReceiveServiceImpl implements ReceiveService {
     private final Map<String, Set<Integer>> seqMap = new HashMap<>();
 
     public ReceiveServiceImpl() {
-        FileConfig.init();
+
     }
 
     /**

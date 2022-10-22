@@ -15,7 +15,8 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JsonGeneratorTest {
-
+    String TEST_FILE_NAME = "avatar.7z";
+    String TEMP_FILE_NAME = "temp_" + TEST_FILE_NAME;
     /**
      * 1. 生成postman批量请求json文件
      * 2. 测试 ReceiveService 的 file接收方法并模拟 postman 调该方法
@@ -24,33 +25,36 @@ class JsonGeneratorTest {
      */
     @Test
     void generatePostmanJsonFile() throws IOException {
+        String testFilePath = FileConfig.getFilePath(TEST_FILE_NAME);
+        String tempFilePath = FileConfig.getFilePath(TEMP_FILE_NAME);
+        String jsonFilePath = FileConfig.getFilePath(JsonGenerator.JSON_FILE_NAME);
         // input
-        FileConfig.init();
-        Assert.assertTrue(FileConfig.fileExists(FileConfig.TEST_FILE_PATH));
-        String md5 = MD5Util.getFileMd5(FileConfig.TEST_FILE_PATH);
-        System.out.println(FileConfig.TEST_FILE_PATH + " md5=" + md5);
+        Assert.assertTrue(FileConfig.fileExists(testFilePath));
+        String md5 = MD5Util.getFileMd5(testFilePath);
+        System.out.println(testFilePath + " md5=" + md5);
         Assert.assertNotNull(md5);
         // do
-        PostmanJson postmanJson = JsonGenerator.generatePostmanJsonFile(FileConfig.TEST_FILE_PATH, FileConfig.JSON_FILE_PATH);
+        PostmanJson postmanJson = JsonGenerator.generatePostmanJsonFile(testFilePath, jsonFilePath);
         // assert
         Assert.assertNotNull(postmanJson);
         Assert.assertNotNull(postmanJson.getPostBodyPayloadList());
         Assert.assertFalse(postmanJson.getPostBodyPayloadList().isEmpty());
-        Assert.assertTrue(FileConfig.fileExists(FileConfig.JSON_FILE_PATH));
+        Assert.assertTrue(FileConfig.fileExists(jsonFilePath));
         // test service
         int count = postmanJson.getPostBodyPayloadList().size();
         ReceiveService receiveService = new ReceiveServiceImpl();
         ResponseEntity response = null;
         for (int i = 0; i < count; i++) {
             SliceEntity entity = postmanJson.getPostBodyPayloadList().get(i);
-            response = receiveService.file(FileConfig.TEMP_FILE_NAME, count, entity);
+            response = receiveService.file(TEMP_FILE_NAME, count, entity);
         }
-        Assert.assertTrue(FileConfig.fileExists(FileConfig.TEMP_FILE_PATH));
+        System.out.println(TEST_FILE_NAME + ": " + md5 + " -> " + TEMP_FILE_NAME + ": " + response.getData());
+        Assert.assertTrue(FileConfig.fileExists(tempFilePath));
         Assert.assertNotNull(response);
         Assert.assertEquals(md5, response.getData());
 
-        FileConfig.deleteFile(FileConfig.JSON_FILE_PATH);
-        FileConfig.deleteFile(FileConfig.TEMP_FILE_PATH);
+//        FileConfig.deleteFile(jsonFilePath);
+        FileConfig.deleteFile(tempFilePath);
     }
 
 }

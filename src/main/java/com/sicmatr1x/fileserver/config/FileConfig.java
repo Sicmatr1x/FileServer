@@ -5,32 +5,17 @@ import java.io.File;
 
 public class FileConfig {
 
+    public static String WORK_FOLDER = System.getProperty("user.dir") + "/files";
+
     public static String TEST_FILE_NAME = "avatar.7z";
-    public static String TEST_FILE_PATH = "";
 
-    public static String JSON_FILE_NAME = "postmanRunner.json";
-    public static String JSON_FILE_PATH = "";
-
-    public static String TEMP_FILE_NAME = "test_avatar.7z";
-    public static String TEMP_FILE_PATH = "";
-
-    public static String OUTPUT_FOLDER = "/files";
-    public static String OUTPUT_FOLDER_PATH = "";
-
-    public static void init() {
-        OUTPUT_FOLDER_PATH = "";
-        TEST_FILE_PATH = "";
-        JSON_FILE_PATH = "";
-        TEMP_FILE_PATH = "";
-
-        OUTPUT_FOLDER_PATH = System.getProperty("user.dir") + OUTPUT_FOLDER;
-        TEST_FILE_PATH = getFilePath(TEST_FILE_NAME);
-        JSON_FILE_PATH = getFilePath(JSON_FILE_NAME);
-        TEMP_FILE_PATH = getFilePath(TEMP_FILE_NAME);
-    }
-
+    /**
+     * 根据默认工作路径生成文件路径
+     * @param fileName 文件名
+     * @return 文件路径
+     */
     public static String getFilePath(String fileName) {
-        return OUTPUT_FOLDER_PATH + "/" + fileName;
+        return WORK_FOLDER + "/" + fileName;
     }
 
     public static boolean fileExists(String path) {
