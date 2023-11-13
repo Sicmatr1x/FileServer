@@ -37,3 +37,6 @@ build/
 .run/
 
 .mvn/
+
+### Mac
+*.DS_Store
