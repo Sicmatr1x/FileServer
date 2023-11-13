@@ -72,8 +72,8 @@ public class MyBase64Util {
     public static String convertBase64ToHtmlSafeStr(String base64) {
         StringBuilder stringBuilder = new StringBuilder(base64);
         String str = stringBuilder.toString();
-        str = str.replaceAll("\r\n", "-rn-");
-        str = str.replaceAll("/", "--");
+        str = str.replaceAll("\r\n", "--rn--");
+        str = str.replaceAll("/", "-__-");
         return str;
     }
 
@@ -86,8 +86,8 @@ public class MyBase64Util {
     public static String convertHtmlSafeStrToBase64(String safeBase64) {
         StringBuilder stringBuilder = new StringBuilder(safeBase64);
         String str = stringBuilder.toString();
-        str = str.replaceAll("-rn-", "\r\n");
-        str = str.replaceAll("--", "/");
+        str = str.replaceAll("--rn--", "\r\n");
+        str = str.replaceAll("-__-", "/");
         return str;
     }
 

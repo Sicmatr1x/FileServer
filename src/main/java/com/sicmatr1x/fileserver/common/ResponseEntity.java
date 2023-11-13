@@ -25,6 +25,22 @@ public class ResponseEntity implements Serializable {
         this.message = message;
     }
 
+    public ResponseEntity success() {
+        this.success = true;
+        return this;
+    }
+
+    public ResponseEntity failed() {
+        this.success = false;
+        return this;
+    }
+
+    public ResponseEntity failed(String message) {
+        this.success = false;
+        this.message = message;
+        return this;
+    }
+
     public boolean isSuccess() {
         return success;
     }
